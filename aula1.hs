@@ -31,9 +31,18 @@ myinit2 xs =
 xor :: Bool -> Bool -> Bool
 xor a b = (a && not b) || (not a && b)
 
+convert_aux3 :: Int -> String --converter milhares
+convert_aux3 i 
+    | i < 1000 = convert_aux2 i
+    | i >= 1000000 = error "Invalid input"
+    | i == 1000 && i < 1000000 = "mil"
+    | i > 1000 && i < 1000000 && (i `mod` 1000) /= 0 = convert_aux2 (i `div` 1000) ++ " mil, " ++ convert_aux2 (i `mod` 1000)
+    | i > 1000 && i < 1000000 && (i `mod` 1000) == 0 = convert_aux2 (i `div` 1000) ++ " mil"
+
 convert_aux2 :: Int -> String --inferiores a 1000
 convert_aux2 i
     | i < 0 || i >= 1000 = error "invalid input"
+    | i < 100 && i > 0 = convert_aux i
     | i == 100 = "cem"
     | i > 100 && (i `mod` 100) /= 0 && i < 200 = "cento e " ++ convert_aux (i `mod` 100)
     | i > 100 && (i `mod` 100) == 0 && i < 200 = "cem"
@@ -60,7 +69,7 @@ convert_aux i
     | i == 0 = ""
     | i == 1 = "um"
     | i == 2 = "dois"
-    | i == 3 = "três"
+    | i == 3 = "tres"
     | i == 4 = "quatro"
     | i == 5 = "cinco"
     | i == 6 = "seis"
@@ -92,7 +101,12 @@ convert_aux i
     | i >= 80 && i < 90 && (i `mod` 10) /= 0 = "oitenta e " ++ convert_aux (i `mod` 10)
     | i >= 80 && i < 90 && (i `mod` 10) == 0 = "oitenta"
     | i >= 90 && (i `mod` 10) /= 0 = "noventa e " ++ convert_aux (i `mod` 10)
-    | i >= 90 && (i `mod` 10) == 0 = "noventa"
+    | i >= 90 && (i `mod` 10) == 0 = "noventa"    
 
 converte :: Int -> String
-converte i = "..."
+converte i
+    | i < 1000000 = convert_aux3 i
+    | i >= 1000000 && (i `div` 1000000) == 1 && (i `mod` 1000000) == 0 = "um milhao" 
+    | i > 1000000 && (i `div` 1000000) == 1 && (i `mod` 1000000) /= 0 = "um milhao e " ++ convert_aux3(i `mod` 1000000)
+    | i > 1000000 && (i `div` 1000000) /= 1 && (i `mod` 1000000) == 0 = convert_aux (i `div` 1000000) ++ " milhoes"
+    | i > 1000000 && (i `div` 1000000) /= 1 && (i `mod` 1000000) /= 0 = convert_aux (i `mod` 1000000) ++ " milhoes, " ++ convert_aux3(i `mod` 1000000)
