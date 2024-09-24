@@ -110,3 +110,52 @@ converte i
     | i > 1000000 && (i `div` 1000000) == 1 && (i `mod` 1000000) /= 0 = "um milhao e " ++ convert_aux3(i `mod` 1000000)
     | i > 1000000 && (i `div` 1000000) /= 1 && (i `mod` 1000000) == 0 = convert_aux (i `div` 1000000) ++ " milhoes"
     | i > 1000000 && (i `div` 1000000) /= 1 && (i `mod` 1000000) /= 0 = convert_aux (i `mod` 1000000) ++ " milhoes, " ++ convert_aux3(i `mod` 1000000)
+
+binom :: Integer -> Integer -> Integer
+binom n k = 
+    (product [1..n] `div` (product[1..k] * product[1..n-k]))
+
+classifica :: Int -> String
+classifica x =
+    | x > 20 || x < 0 = error "Nota Invalida"
+    | x <= 9 = "Reprovado"
+    | x >= 10 && x <= 12 = "Suficiente"
+    | x >= 13 && x <= 15 = "Bom"
+    | x >= 16 && x <= 18 = "Muito Bom"
+    | x >= 19 && x <= 20 = "Muito Bom com Distincao" 
+
+classifica_IMC :: Float -> Float -> String
+classifica peso altura
+    | imc < 18.5 = "Baixo Peso"
+    | imc >= 18.5 && imc < 25 = "Peso Normal"
+    | imc >= 25 && imc < 30 = "Excesso de Peso"
+    | imc >= 30 = "Obesidade"
+  where imc = peso / (altura ^ 2)
+
+max3 :: Ord a => a -> a -> a -> a
+max3 a b c = (max a (max b c))
+
+min3 :: Ord a => a -> a -> a -> a
+min3 a b c = (min a (min b c))
+
+safetail1 :: [a] -> [a]
+safetail1 xs = if null xs then [] else tail xs
+
+safetail2 :: [a] -> [a]
+safetail2 xs
+    | null xs   = []
+    | otherwise = tail xs
+
+safetail3 :: [a] -> [a]
+safetail3 []     = []
+safetail3 (_:xs) = xs
+
+curta :: [a] -> Bool
+curta xs
+    | length xs > 0 && length xs < 4 = True
+    | length xs >= 4 || length xs == 0 = False 
+
+curta2 :: [a] -> Bool
+curta2 (a:b:c:d:e) = False -- e pode ser vazio, temos de forçar d a existir, deste modo temos sempre pelo menos 4 elementos, 5 se e nao for nulo
+curta2 [] = False
+curta2 xs = True 
