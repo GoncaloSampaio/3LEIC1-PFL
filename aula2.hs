@@ -87,3 +87,46 @@ divProp x = [y | y <- [1..x-1], mod x y == 0]
 
 perfeitos :: Integer -> [Integer]
 perfeitos 0 = []
+perfeitos x = [y | y <- [1.x], sum divProp y == y]
+
+pitagoricos :: Integer -> [(Integer ,Integer ,Integer)] 
+pitagoricos 0 = []
+pitagoricos a = [(x, y, z) | x <- [1..n], y <- [1..n], z <- [1..n], x^2 + y^2 == z^2]
+
+primo :: Integer -> Bool
+primo 0 = False
+primo 1 = False
+primo x 
+    | length divProp x > 2 = False
+    | otherwise = True~
+
+mersennes :: [Int]
+mersennes = [(2 ^ n -1) | n <- [1..30], primo (2 ^ n - 1)]
+
+{--Função da TP passada--}
+binom :: Integer -> Integer -> Integer
+binom n k = 
+    (product [1..n] `div` (product[1..k] * product[1..n-k]))
+{--Função da TP passada--}
+
+pascal :: Integer -> [[Integer]]
+pascal n = [[binom i k | k <- [0..i]] | i <- [0..n]]
+
+cifrarChar :: Int -> Char -> Char
+cifrarChar n c
+    | isLower c = chr ((ord c - ord 'a' + n) `mod` 26 + ord 'a')  
+    | isUpper c = chr ((ord c - ord 'A' + n) `mod` 26 + ord 'A')  
+    | otherwise = c
+
+cifrar :: Int -> String -> String
+cifrar n str = map (cifrarChar n) str
+
+myConcat2 :: [[a]] -> [a]
+myConcat2 xs = [y | x <- xs, y <- x ]
+{-- lista de "y" sendo que este "y" vem da lista de "x" q por sua vez, sendo este uma lista, vem de uma lista de listas "xs"--}
+
+myReplicate2 :: Int -> a -> [a]
+myReplicate2 0 _ = []
+myReplicate2 n x = [x | _ <- [1..n]] {--faz x repetir n vezes com algo ("_") que é incrementado, mas não diretamente usado--}
+
+forte :: String -> Bool
