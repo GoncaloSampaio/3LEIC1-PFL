@@ -1,4 +1,3 @@
-import Data.Array (Ix(index))
 myAnd :: [Bool] -> Bool
 myAnd [] = True
 myAnd (x:xs)
